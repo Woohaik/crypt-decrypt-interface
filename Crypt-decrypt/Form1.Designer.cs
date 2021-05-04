@@ -39,6 +39,8 @@
             this.verClavesBtn = new System.Windows.Forms.Button();
             this.openFileXml = new System.Windows.Forms.OpenFileDialog();
             this.openFileTxt = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileXml = new System.Windows.Forms.SaveFileDialog();
+            this.saveFileTxt = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // encriptarBtn
@@ -50,6 +52,7 @@
             this.encriptarBtn.TabIndex = 0;
             this.encriptarBtn.Text = "Encriptar";
             this.encriptarBtn.UseVisualStyleBackColor = true;
+            this.encriptarBtn.Click += new System.EventHandler(this.encriptarBtn_Click);
             // 
             // desencriptarBtn
             // 
@@ -81,6 +84,7 @@
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(541, 176);
             this.textBox1.TabIndex = 3;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // crearClavesBtn
             // 
@@ -91,6 +95,7 @@
             this.crearClavesBtn.TabIndex = 4;
             this.crearClavesBtn.Text = "Crear Claves";
             this.crearClavesBtn.UseVisualStyleBackColor = true;
+            this.crearClavesBtn.Click += new System.EventHandler(this.crearClavesBtn_Click);
             // 
             // importarClavesBtn
             // 
@@ -124,6 +129,8 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(177, 21);
             this.comboBox2.TabIndex = 8;
+            this.comboBox2.Text = "Selecciona algoritmo";
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // verClavesBtn
             // 
@@ -145,6 +152,15 @@
             // 
             this.openFileTxt.FileName = "openFileTxt";
             this.openFileTxt.Filter = " (*.txt)|*.txt";
+            // 
+            // saveFileXml
+            // 
+            this.saveFileXml.Filter = " (*.xml)|*.xml";
+            this.saveFileXml.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileXml_FileOk);
+            // 
+            // saveFileTxt
+            // 
+            this.saveFileTxt.Filter = " (*.txt)|*.txt";
             // 
             // Form1
             // 
@@ -180,6 +196,8 @@
         private System.Windows.Forms.Button verClavesBtn;
         private System.Windows.Forms.OpenFileDialog openFileXml;
         private System.Windows.Forms.OpenFileDialog openFileTxt;
+        private System.Windows.Forms.SaveFileDialog saveFileXml;
+        private System.Windows.Forms.SaveFileDialog saveFileTxt;
     }
 }
 
