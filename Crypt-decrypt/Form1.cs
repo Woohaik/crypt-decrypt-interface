@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace Crypt_decrypt
 {
-    public partial class Form1 : Form
+    public partial class Form1dfgdfg : Form
     {
 
         private string clavePublica = "";
         private string clavePrivada = "";
-        public Form1()
+        public Form1dfgdfg()
         {
             InitializeComponent();
         }
@@ -102,7 +102,7 @@ namespace Crypt_decrypt
             importarClavesBtn.Enabled = false;
             exportarClavesBtn.Enabled = false;
             encriptarBtn.Enabled = false;
-            verClavesBtn.Enabled = false;
+
             desencriptarBtn.Enabled = false;
 
 
@@ -179,6 +179,11 @@ namespace Crypt_decrypt
                 }
 
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
