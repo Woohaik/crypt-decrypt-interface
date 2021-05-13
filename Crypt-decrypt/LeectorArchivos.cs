@@ -27,7 +27,7 @@ namespace Crypt_decrypt
             }
         }
 
-        public static void exportarXml(string alName, string clavePrivadaTexto, string clavePublicaTexto, string ruta)
+        public static void exportarXml(string alName, string clavePrivadaTexto1, string clavePrivadaTexto2, string clavePrivadaTexto3, string clavePublicaTexto, string ruta)
         {
             if (File.Exists(ruta))
             {
@@ -39,11 +39,29 @@ namespace Crypt_decrypt
             XmlElement root = doc.DocumentElement;
             XmlElement alTag = doc.CreateElement(string.Empty, alName, string.Empty);
             XmlElement clavePrivada = doc.CreateElement(string.Empty, "clave", string.Empty);
-            clavePrivada.InnerText = clavePrivadaTexto;
+            XmlElement clavePrivada2 = doc.CreateElement(string.Empty, "clave2", string.Empty);
+            XmlElement clavePrivada3 = doc.CreateElement(string.Empty, "clave3", string.Empty);
+
+            clavePrivada.InnerText = clavePrivadaTexto1;
+            clavePrivada2.InnerText = clavePrivadaTexto2;
+            clavePrivada3.InnerText = clavePrivadaTexto3;
+
             XmlElement clavePublica = doc.CreateElement(string.Empty, "clavePublica", string.Empty);
-            clavePublica.InnerText = clavePrivadaTexto;
+            clavePublica.InnerText = clavePublicaTexto;
             alTag.AppendChild(clavePrivada);
-            alTag.AppendChild(clavePublica);
+            if (alName.Equals("AES"))
+            {
+
+                alTag.AppendChild(clavePublica);
+            }
+            else
+            {
+                alTag.AppendChild(clavePrivada2);
+                alTag.AppendChild(clavePrivada3);
+            }
+
+
+
 
             doc.InsertBefore(xmlDeclaration, root);
             doc.AppendChild(alTag);

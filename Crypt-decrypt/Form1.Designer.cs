@@ -43,10 +43,10 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.inputPrivada1 = new System.Windows.Forms.TextBox();
+            this.inputPrivada3 = new System.Windows.Forms.TextBox();
+            this.inputPrivada2 = new System.Windows.Forms.TextBox();
+            this.inputPublica1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -90,6 +90,7 @@
             // textBox1
             // 
             this.textBox1.AcceptsReturn = true;
+            this.textBox1.Enabled = false;
             this.textBox1.Location = new System.Drawing.Point(472, 231);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
@@ -173,6 +174,7 @@
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox2.Size = new System.Drawing.Size(428, 210);
             this.textBox2.TabIndex = 10;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label1
             // 
@@ -192,33 +194,37 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "Texto Encriptado:";
             // 
-            // textBox3
+            // inputPrivada1
             // 
-            this.textBox3.Location = new System.Drawing.Point(97, 88);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(237, 20);
-            this.textBox3.TabIndex = 13;
+            this.inputPrivada1.Enabled = false;
+            this.inputPrivada1.Location = new System.Drawing.Point(97, 88);
+            this.inputPrivada1.Name = "inputPrivada1";
+            this.inputPrivada1.Size = new System.Drawing.Size(237, 20);
+            this.inputPrivada1.TabIndex = 13;
             // 
-            // textBox4
+            // inputPrivada3
             // 
-            this.textBox4.Location = new System.Drawing.Point(97, 140);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(237, 20);
-            this.textBox4.TabIndex = 14;
+            this.inputPrivada3.Enabled = false;
+            this.inputPrivada3.Location = new System.Drawing.Point(97, 140);
+            this.inputPrivada3.Name = "inputPrivada3";
+            this.inputPrivada3.Size = new System.Drawing.Size(237, 20);
+            this.inputPrivada3.TabIndex = 14;
             // 
-            // textBox5
+            // inputPrivada2
             // 
-            this.textBox5.Location = new System.Drawing.Point(97, 114);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(237, 20);
-            this.textBox5.TabIndex = 15;
+            this.inputPrivada2.Enabled = false;
+            this.inputPrivada2.Location = new System.Drawing.Point(97, 114);
+            this.inputPrivada2.Name = "inputPrivada2";
+            this.inputPrivada2.Size = new System.Drawing.Size(237, 20);
+            this.inputPrivada2.TabIndex = 15;
             // 
-            // textBox6
+            // inputPublica1
             // 
-            this.textBox6.Location = new System.Drawing.Point(97, 61);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(237, 20);
-            this.textBox6.TabIndex = 16;
+            this.inputPublica1.Enabled = false;
+            this.inputPublica1.Location = new System.Drawing.Point(97, 61);
+            this.inputPublica1.Name = "inputPublica1";
+            this.inputPublica1.Size = new System.Drawing.Size(237, 20);
+            this.inputPublica1.TabIndex = 16;
             // 
             // label3
             // 
@@ -287,10 +293,10 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.inputPublica1);
+            this.Controls.Add(this.inputPrivada2);
+            this.Controls.Add(this.inputPrivada3);
+            this.Controls.Add(this.inputPrivada1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox2);
@@ -328,10 +334,10 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox inputPrivada1;
+        private System.Windows.Forms.TextBox inputPrivada3;
+        private System.Windows.Forms.TextBox inputPrivada2;
+        private System.Windows.Forms.TextBox inputPublica1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

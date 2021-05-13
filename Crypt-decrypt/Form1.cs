@@ -14,8 +14,7 @@ namespace Crypt_decrypt
     public partial class Form1dfgdfg : Form
     {
 
-        private string clavePublica = "";
-        private string clavePrivada = "";
+
         public Form1dfgdfg()
         {
             InitializeComponent();
@@ -41,7 +40,7 @@ namespace Crypt_decrypt
         {
             if (saveFileXml.ShowDialog() == DialogResult.OK)
             {
-                LeectorArchivos.exportarXml(comboBox2.Text, clavePrivada, clavePublica, saveFileXml.FileName);
+                LeectorArchivos.exportarXml(comboBox2.Text, inputPrivada1.Text , inputPrivada2.Text, inputPrivada3.Text,inputPublica1.Text, saveFileXml.FileName);
             }
 
         }
@@ -59,22 +58,7 @@ namespace Crypt_decrypt
 
         }
 
-        private void verClavesBtn_Click(object sender, EventArgs e)
-        {
-            if (!clavePrivada.Equals(""))
-            {
-                string clavesAMostrar = "Clave: " + clavePrivada;
 
-                if (!clavePublica.Equals("")) clavesAMostrar += "\nClave Publica: " + clavePublica;
-
-                MessageBox.Show(clavesAMostrar);
-            }
-            else
-            {
-                MessageBox.Show("No hay claves para mostrar");
-            }
-
-        }
 
         private void importarTextoBtn_Click(object sender, EventArgs e)
         {
@@ -102,20 +86,44 @@ namespace Crypt_decrypt
             importarClavesBtn.Enabled = false;
             exportarClavesBtn.Enabled = false;
             encriptarBtn.Enabled = false;
-
             desencriptarBtn.Enabled = false;
+
+
+   
+            inputPrivada2.Visible = false;
+            inputPrivada3.Visible = false;
+            inputPublica1.Visible = false;
 
 
             if (!(comboBox2.Text.Equals("TDES") || comboBox2.Text.Equals("AES")))
             {
                 comboBox2.Text = "";
+
             }
             else
             {
+                if (comboBox2.Text.Equals("TDES"))
+                {
+                    inputPrivada2.Visible = true;
+                    inputPrivada3.Visible = true;
+              
+                }
+                else
+                {
+                    inputPublica1.Visible = true;
+                    inputPrivada1.Visible = true;
+
+                }
+
+                inputPublica1.Text = "";
+                inputPrivada1.Text = "";
+                inputPrivada2.Text = "";
+                inputPrivada3.Text = "";
+
+
+
                 crearClavesBtn.Enabled = true;
                 importarClavesBtn.Enabled = true;
-
-
 
                 encriptarBtn.Enabled = false;
                 desencriptarBtn.Enabled = false;
@@ -129,15 +137,30 @@ namespace Crypt_decrypt
 
         private void crearClavesBtn_Click(object sender, EventArgs e)
         {
-            clavePublica = "Soy la publica";
-            clavePrivada = "Soy la privadeichon";
+         
+                inputPrivada1.Text = RandomHex.RandomHexString(new Random(Environment.TickCount));
+            if (comboBox2.Text.Equals("TDES"))
+            {
+
+   
+                inputPrivada2.Text = RandomHex.RandomHexString(new Random(Environment.TickCount + 100));
+                inputPrivada3.Text = RandomHex.RandomHexString(new Random(Environment.TickCount - 100));
+
+            }
+            else
+            {
+                inputPublica1.Text = RandomHex.RandomHexString(new Random(Environment.TickCount + 15));
+            }
+
+
+
+
+
             exportarClavesBtn.Enabled = true;
-
-
-            if (!textBox1.Text.Equals(""))
+            if (!textBox2.Text.Equals(""))
             {
                 encriptarBtn.Enabled = true;
-                desencriptarBtn.Enabled = true;
+                desencriptarBtn.Enabled = false;
             }
         }
 
@@ -164,7 +187,17 @@ namespace Crypt_decrypt
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text.Equals(""))
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox2.Text.Equals(""))
             {
                 encriptarBtn.Enabled = false;
                 desencriptarBtn.Enabled = false;
@@ -172,18 +205,13 @@ namespace Crypt_decrypt
             else
             {
 
-                if ((comboBox2.Text.Equals("TDES") || comboBox2.Text.Equals("AES")) && !clavePrivada.Equals(""))
+                if ((comboBox2.Text.Equals("TDES") || comboBox2.Text.Equals("AES")) && !inputPrivada1.Text.Equals(""))
                 {
                     encriptarBtn.Enabled = true;
                     desencriptarBtn.Enabled = true;
                 }
 
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
