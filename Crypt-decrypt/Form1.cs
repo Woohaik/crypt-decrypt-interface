@@ -22,13 +22,7 @@ namespace Crypt_decrypt
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!textBox1.Text.Equals(""))
-            {
-                if (saveFileTxt.ShowDialog() == DialogResult.OK)
-                {
-                    LeectorArchivos.guardarTxt(textBox1.Text, saveFileTxt.FileName);
-                }
-            }
+
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -70,6 +64,10 @@ namespace Crypt_decrypt
                     string text = System.IO.File.ReadAllText(openFileTxt.FileName);
                     text = Base64.Base64Decode(text);
                     textBox1.Text = text;
+                    if (textBox1.Text.Length > 0)
+                    {
+                        exportarEn.Enabled = true;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -126,13 +124,9 @@ namespace Crypt_decrypt
                 importarClavesBtn.Enabled = true;
 
                 encriptarBtn.Enabled = false;
-                desencriptarBtn.Enabled = false;
-
+   
 
             }
-
-            MessageBox.Show(comboBox2.Text);
-
         }
 
         private void crearClavesBtn_Click(object sender, EventArgs e)
@@ -153,14 +147,17 @@ namespace Crypt_decrypt
             }
 
 
-
+            if (!textBox1.Text.Equals("") )
+            {
+                desencriptarBtn.Enabled = true;
+            }
 
 
             exportarClavesBtn.Enabled = true;
-            if (!textBox2.Text.Equals(""))
+            if (!textplano.Text.Equals(""))
             {
                 encriptarBtn.Enabled = true;
-                desencriptarBtn.Enabled = false;
+ 
             }
         }
 
@@ -176,18 +173,15 @@ namespace Crypt_decrypt
 
         private void encriptarBtn_Click(object sender, EventArgs e)
         {
-            if (!textBox1.Text.Equals(""))
-            {
-                if (saveFileTxt.ShowDialog() == DialogResult.OK)
-                {
-                    LeectorArchivos.guardarTxt(textBox1.Text, saveFileTxt.FileName);
-                }
-            }
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            if (!textBox1.Text.Equals("") && !inputPrivada1.Text.Equals(""))
+            {
+                desencriptarBtn.Enabled = true;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -197,10 +191,10 @@ namespace Crypt_decrypt
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            if (textBox2.Text.Equals(""))
+            if (textplano.Text.Equals(""))
             {
                 encriptarBtn.Enabled = false;
-                desencriptarBtn.Enabled = false;
+
             }
             else
             {
@@ -211,6 +205,17 @@ namespace Crypt_decrypt
                     desencriptarBtn.Enabled = true;
                 }
 
+            }
+        }
+
+        private void exportarEn_Click(object sender, EventArgs e)
+        {
+            if (!textBox1.Text.Equals(""))
+            {
+                if (saveFileTxt.ShowDialog() == DialogResult.OK)
+                {
+                    LeectorArchivos.guardarTxt(Base64.Base64Encode(textBox1.Text), saveFileTxt.FileName);
+                }
             }
         }
     }

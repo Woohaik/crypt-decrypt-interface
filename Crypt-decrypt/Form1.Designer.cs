@@ -40,7 +40,7 @@
             this.openFileTxt = new System.Windows.Forms.OpenFileDialog();
             this.saveFileXml = new System.Windows.Forms.SaveFileDialog();
             this.saveFileTxt = new System.Windows.Forms.SaveFileDialog();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textplano = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.inputPrivada1 = new System.Windows.Forms.TextBox();
@@ -53,6 +53,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.exportarEn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // encriptarBtn
@@ -165,16 +166,16 @@
             // 
             this.saveFileTxt.Filter = " (*.txt)|*.txt";
             // 
-            // textBox2
+            // textplano
             // 
-            this.textBox2.AcceptsReturn = true;
-            this.textBox2.Location = new System.Drawing.Point(12, 231);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(428, 210);
-            this.textBox2.TabIndex = 10;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textplano.AcceptsReturn = true;
+            this.textplano.Location = new System.Drawing.Point(12, 231);
+            this.textplano.Multiline = true;
+            this.textplano.Name = "textplano";
+            this.textplano.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textplano.Size = new System.Drawing.Size(428, 210);
+            this.textplano.TabIndex = 10;
+            this.textplano.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label1
             // 
@@ -282,11 +283,23 @@
             this.label8.TabIndex = 22;
             this.label8.Text = "ALGORITMO:";
             // 
+            // exportarEn
+            // 
+            this.exportarEn.Enabled = false;
+            this.exportarEn.Location = new System.Drawing.Point(635, 186);
+            this.exportarEn.Name = "exportarEn";
+            this.exportarEn.Size = new System.Drawing.Size(157, 23);
+            this.exportarEn.TabIndex = 23;
+            this.exportarEn.Text = "Exportar Texto";
+            this.exportarEn.UseVisualStyleBackColor = true;
+            this.exportarEn.Click += new System.EventHandler(this.exportarEn_Click);
+            // 
             // Form1dfgdfg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 456);
+            this.Controls.Add(this.exportarEn);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -299,7 +312,7 @@
             this.Controls.Add(this.inputPrivada1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textplano);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.exportarClavesBtn);
             this.Controls.Add(this.importarClavesBtn);
@@ -331,7 +344,7 @@
         private System.Windows.Forms.OpenFileDialog openFileTxt;
         private System.Windows.Forms.SaveFileDialog saveFileXml;
         private System.Windows.Forms.SaveFileDialog saveFileTxt;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textplano;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox inputPrivada1;
@@ -344,6 +357,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button exportarEn;
     }
 }
 
