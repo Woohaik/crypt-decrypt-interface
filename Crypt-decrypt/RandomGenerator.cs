@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Crypt_decrypt
 {
-   public class RandomHex
+   public class RandomGenerator
     {
-        public static string RandomHexString(Random rm)
+        public static string RandomHex(Random rm)
         {
-
-     
             string hexValue = "";
             int num;
 
@@ -20,8 +18,6 @@ namespace Crypt_decrypt
                 num = rm.Next(0, int.MaxValue);
                 hexValue += num.ToString("X8");
             }
-
-
             return hexValue;
         }
     }

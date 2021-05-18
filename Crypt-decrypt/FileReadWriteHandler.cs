@@ -8,13 +8,11 @@ using System.Xml;
 
 namespace Crypt_decrypt
 {
-    public class LeectorArchivos
+    public class FileReadWriteHandler
     {
 
         public static void guardarTxt(string texto, string ruta)
         {
-
-
             if (File.Exists(ruta))
             {
                 File.Delete(ruta);
@@ -27,7 +25,14 @@ namespace Crypt_decrypt
             }
         }
 
-        public static void exportarXml(string alName, string clavePrivadaTexto1, string clavePrivadaTexto2, string clavePrivadaTexto3, string clavePublicaTexto, string ruta)
+
+        public static string[] leerXml(string ruta)
+        {
+            string[] holas = { "Wano"};
+            return holas;
+        }
+
+        public static void exportarXml(string alName, string clavePrivadaTexto1, string clavePublicaTexto, string ruta)
         {
             if (File.Exists(ruta))
             {
@@ -39,27 +44,16 @@ namespace Crypt_decrypt
             XmlElement root = doc.DocumentElement;
             XmlElement alTag = doc.CreateElement(string.Empty, alName, string.Empty);
             XmlElement clavePrivada = doc.CreateElement(string.Empty, "clave", string.Empty);
-            XmlElement clavePrivada2 = doc.CreateElement(string.Empty, "clave2", string.Empty);
-            XmlElement clavePrivada3 = doc.CreateElement(string.Empty, "clave3", string.Empty);
 
             clavePrivada.InnerText = clavePrivadaTexto1;
-            clavePrivada2.InnerText = clavePrivadaTexto2;
-            clavePrivada3.InnerText = clavePrivadaTexto3;
 
             XmlElement clavePublica = doc.CreateElement(string.Empty, "clavePublica", string.Empty);
             clavePublica.InnerText = clavePublicaTexto;
             alTag.AppendChild(clavePrivada);
             if (alName.Equals("AES"))
             {
-
                 alTag.AppendChild(clavePublica);
             }
-            else
-            {
-                alTag.AppendChild(clavePrivada2);
-                alTag.AppendChild(clavePrivada3);
-            }
-
 
 
 

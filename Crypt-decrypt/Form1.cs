@@ -22,7 +22,16 @@ namespace Crypt_decrypt
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                byte[] cyfradoDesdeBase64 = ByteConverter.Base64ToByteArray(textoEncriptado.Text);
+                string desifrado = TDES.decrypt_TDES(cyfradoDesdeBase64, ByteConverter.StringToByteArray(inputPrivada1.Text), ByteConverter.StringToByteArray(inputPrivada1.Text));
+                textplano.Text = desifrado;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -34,7 +43,7 @@ namespace Crypt_decrypt
         {
             if (saveFileXml.ShowDialog() == DialogResult.OK)
             {
-                LeectorArchivos.exportarXml(comboBox2.Text, inputPrivada1.Text , inputPrivada2.Text, inputPrivada3.Text,inputPublica1.Text, saveFileXml.FileName);
+                FileReadWriteHandler.exportarXml(comboBox2.Text, inputPrivada1.Text, inputPublica1.Text, saveFileXml.FileName);
             }
 
         }
@@ -62,9 +71,9 @@ namespace Crypt_decrypt
                 {
                     // LLenar el texto obtenido a el text area
                     string text = System.IO.File.ReadAllText(openFileTxt.FileName);
-                    text = Base64.Base64Decode(text);
-                    textBox1.Text = text;
-                    if (textBox1.Text.Length > 0)
+                    text = ByteConverter.Base64Decode(text);
+                    textoEncriptado.Text = text;
+                    if (textoEncriptado.Text.Length > 0)
                     {
                         exportarEn.Enabled = true;
                     }
@@ -72,7 +81,7 @@ namespace Crypt_decrypt
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                    MessageBox.Show("No se ha podido decodificar el texto de base 64");
+
                 }
 
             }
@@ -87,9 +96,8 @@ namespace Crypt_decrypt
             desencriptarBtn.Enabled = false;
 
 
-   
-            inputPrivada2.Visible = false;
-            inputPrivada3.Visible = false;
+
+
             inputPublica1.Visible = false;
 
 
@@ -100,23 +108,16 @@ namespace Crypt_decrypt
             }
             else
             {
-                if (comboBox2.Text.Equals("TDES"))
+                if (!comboBox2.Text.Equals("TDES"))
                 {
-                    inputPrivada2.Visible = true;
-                    inputPrivada3.Visible = true;
-              
-                }
-                else
-                {
+
                     inputPublica1.Visible = true;
                     inputPrivada1.Visible = true;
-
                 }
+
 
                 inputPublica1.Text = "";
                 inputPrivada1.Text = "";
-                inputPrivada2.Text = "";
-                inputPrivada3.Text = "";
 
 
 
@@ -124,40 +125,37 @@ namespace Crypt_decrypt
                 importarClavesBtn.Enabled = true;
 
                 encriptarBtn.Enabled = false;
-   
+
 
             }
         }
 
         private void crearClavesBtn_Click(object sender, EventArgs e)
         {
-         
-                inputPrivada1.Text = RandomHex.RandomHexString(new Random(Environment.TickCount));
+
+
+
+
+
             if (comboBox2.Text.Equals("TDES"))
             {
-
-   
-                inputPrivada2.Text = RandomHex.RandomHexString(new Random(Environment.TickCount + 100));
-                inputPrivada3.Text = RandomHex.RandomHexString(new Random(Environment.TickCount - 100));
-
+                inputPrivada1.Text = ByteConverter.ByteArrayToHexString(TDES.generateKey());
             }
             else
             {
-                inputPublica1.Text = RandomHex.RandomHexString(new Random(Environment.TickCount + 15));
+                inputPrivada1.Text = ByteConverter.ByteArrayToHexString(TDES.generateKey());
+                inputPublica1.Text = RandomGenerator.RandomHex(new Random(Environment.TickCount + 15));
             }
 
-
-            if (!textBox1.Text.Equals("") )
+            if (!textoEncriptado.Text.Equals(""))
             {
                 desencriptarBtn.Enabled = true;
             }
-
 
             exportarClavesBtn.Enabled = true;
             if (!textplano.Text.Equals(""))
             {
                 encriptarBtn.Enabled = true;
- 
             }
         }
 
@@ -173,12 +171,28 @@ namespace Crypt_decrypt
 
         private void encriptarBtn_Click(object sender, EventArgs e)
         {
+            try
+            {
+                byte[] cyfrado = TDES.encrypt_TDES(textplano.Text, ByteConverter.StringToByteArray(inputPrivada1.Text), ByteConverter.StringToByteArray(inputPrivada1.Text));
+
+                textoEncriptado.Text = ByteConverter.ByteArrayToBase64(cyfrado);
+
+          
+
+
+
+                exportarEn.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (!textBox1.Text.Equals("") && !inputPrivada1.Text.Equals(""))
+            if (!textoEncriptado.Text.Equals("") && !inputPrivada1.Text.Equals(""))
             {
                 desencriptarBtn.Enabled = true;
             }
@@ -210,11 +224,11 @@ namespace Crypt_decrypt
 
         private void exportarEn_Click(object sender, EventArgs e)
         {
-            if (!textBox1.Text.Equals(""))
+            if (!textoEncriptado.Text.Equals(""))
             {
                 if (saveFileTxt.ShowDialog() == DialogResult.OK)
                 {
-                    LeectorArchivos.guardarTxt(Base64.Base64Encode(textBox1.Text), saveFileTxt.FileName);
+                    FileReadWriteHandler.guardarTxt(ByteConverter.Base64Encode(textoEncriptado.Text), saveFileTxt.FileName);
                 }
             }
         }
