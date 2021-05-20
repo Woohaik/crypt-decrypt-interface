@@ -23,12 +23,12 @@ namespace Crypt_decrypt
         }
 
 
-     public   static string decrypt_TDES(byte[] cipherText, byte[] Key, byte[] IV)
+     public static string decrypt_TDES(byte[] cipherText, byte[] Key)
         {
             string plaintext = null;
             using (TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider())
             {
-                ICryptoTransform decryptor = tdes.CreateDecryptor(Key, IV);
+                ICryptoTransform decryptor = tdes.CreateDecryptor(Key, Key);
                 using (MemoryStream ms = new MemoryStream(cipherText))
                 {
                     using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
@@ -42,7 +42,7 @@ namespace Crypt_decrypt
             return plaintext;
         }
 
-        public static byte[] encrypt_TDES(string plainText, byte[] Key, byte[] IV)
+        public static byte[] encrypt_TDES(string plainText, byte[] Key)
         {
             byte[] encrypted;
             // Create a new TripleDESCryptoServiceProvider.  
@@ -50,7 +50,7 @@ namespace Crypt_decrypt
             {
                
                 // Create encryptor  
-                ICryptoTransform encryptor = tdes.CreateEncryptor(Key, IV);
+                ICryptoTransform encryptor = tdes.CreateEncryptor(Key, Key);
                 // Create MemoryStream  
                 using (MemoryStream ms = new MemoryStream())
                 {

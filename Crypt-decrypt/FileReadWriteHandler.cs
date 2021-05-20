@@ -26,13 +26,18 @@ namespace Crypt_decrypt
         }
 
 
-        public static string[] leerXml(string ruta)
+        public static string leerXml(string ruta)
         {
-            string[] holas = { "Wano"};
-            return holas;
+
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(ruta);
+            XmlNodeList clave = xDoc.GetElementsByTagName("clave");
+            return clave[0].InnerText;
+
         }
 
-        public static void exportarXml(string alName, string clavePrivadaTexto1, string clavePublicaTexto, string ruta)
+        public static void exportarXml(string alName, string clavePrivadaTexto1, string ruta)
         {
             if (File.Exists(ruta))
             {
@@ -46,17 +51,7 @@ namespace Crypt_decrypt
             XmlElement clavePrivada = doc.CreateElement(string.Empty, "clave", string.Empty);
 
             clavePrivada.InnerText = clavePrivadaTexto1;
-
-            XmlElement clavePublica = doc.CreateElement(string.Empty, "clavePublica", string.Empty);
-            clavePublica.InnerText = clavePublicaTexto;
             alTag.AppendChild(clavePrivada);
-            if (alName.Equals("AES"))
-            {
-                alTag.AppendChild(clavePublica);
-            }
-
-
-
             doc.InsertBefore(xmlDeclaration, root);
             doc.AppendChild(alTag);
             doc.Save(ruta);

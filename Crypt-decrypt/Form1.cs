@@ -5,15 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows;
 
 namespace Crypt_decrypt
 {
     public partial class Form1dfgdfg : Form
     {
-
+        private string aesIV = "Pb84K9+ID2k0M15pdQesMA==";
 
         public Form1dfgdfg()
         {
@@ -25,7 +27,24 @@ namespace Crypt_decrypt
             try
             {
                 byte[] cyfradoDesdeBase64 = ByteConverter.Base64ToByteArray(textoEncriptado.Text);
-                string desifrado = TDES.decrypt_TDES(cyfradoDesdeBase64, ByteConverter.StringToByteArray(inputPrivada1.Text), ByteConverter.StringToByteArray(inputPrivada1.Text));
+                string desifrado = null;
+                if (comboBox2.Text.Equals("TDES"))
+                {
+
+                    desifrado = TDES.decrypt_TDES(cyfradoDesdeBase64, ByteConverter.StringToByteArray(inputPrivada1.Text));
+                }
+                else
+                {
+
+
+
+                    desifrado = AES.decrypt_AES(cyfradoDesdeBase64, ByteConverter.StringToByteArray(inputPrivada1.Text), ByteConverter.Base64ToByteArray(aesIV));
+                }
+
+
+
+
+
                 textplano.Text = desifrado;
             }
             catch (Exception ex)
@@ -43,17 +62,31 @@ namespace Crypt_decrypt
         {
             if (saveFileXml.ShowDialog() == DialogResult.OK)
             {
-                FileReadWriteHandler.exportarXml(comboBox2.Text, inputPrivada1.Text, inputPublica1.Text, saveFileXml.FileName);
+                FileReadWriteHandler.exportarXml(comboBox2.Text, inputPrivada1.Text, saveFileXml.FileName);
             }
 
         }
 
         private void importarClavesBtn_Click(object sender, EventArgs e)
         {
-            if (openFileXml.ShowDialog() == DialogResult.OK)
+            try
             {
+                if (openFileXml.ShowDialog() == DialogResult.OK)
+                {
+                    string key = FileReadWriteHandler.leerXml(openFileXml.FileName);
+                    inputPrivada1.Text = key;
+                    if (!textoEncriptado.Text.Equals("") && !inputPrivada1.Text.Equals("") )
+                    {
+                        desencriptarBtn.Enabled = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
 
             }
+
         }
 
         private void openFileXml_FileOk(object sender, CancelEventArgs e)
@@ -98,7 +131,7 @@ namespace Crypt_decrypt
 
 
 
-            inputPublica1.Visible = false;
+
 
 
             if (!(comboBox2.Text.Equals("TDES") || comboBox2.Text.Equals("AES")))
@@ -111,31 +144,24 @@ namespace Crypt_decrypt
                 if (!comboBox2.Text.Equals("TDES"))
                 {
 
-                    inputPublica1.Visible = true;
+
                     inputPrivada1.Visible = true;
                 }
 
 
-                inputPublica1.Text = "";
-                inputPrivada1.Text = "";
 
+                inputPrivada1.Text = "";
 
 
                 crearClavesBtn.Enabled = true;
                 importarClavesBtn.Enabled = true;
 
                 encriptarBtn.Enabled = false;
-
-
             }
         }
 
         private void crearClavesBtn_Click(object sender, EventArgs e)
         {
-
-
-
-
 
             if (comboBox2.Text.Equals("TDES"))
             {
@@ -143,8 +169,7 @@ namespace Crypt_decrypt
             }
             else
             {
-                inputPrivada1.Text = ByteConverter.ByteArrayToHexString(TDES.generateKey());
-                inputPublica1.Text = RandomGenerator.RandomHex(new Random(Environment.TickCount + 15));
+                inputPrivada1.Text = ByteConverter.ByteArrayToHexString(AES.generateKey());
             }
 
             if (!textoEncriptado.Text.Equals(""))
@@ -161,24 +186,34 @@ namespace Crypt_decrypt
 
         private void saveFileXml_FileOk(object sender, CancelEventArgs e)
         {
-
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-
         }
 
         private void encriptarBtn_Click(object sender, EventArgs e)
         {
             try
+
+
             {
-                byte[] cyfrado = TDES.encrypt_TDES(textplano.Text, ByteConverter.StringToByteArray(inputPrivada1.Text), ByteConverter.StringToByteArray(inputPrivada1.Text));
+
+
+
+
+
+                byte[] cyfrado = null;
+                if (comboBox2.Text.Equals("TDES"))
+                {
+                    cyfrado = TDES.encrypt_TDES(textplano.Text, ByteConverter.StringToByteArray(inputPrivada1.Text));
+                }
+                else
+                {
+                    cyfrado = AES.encrypt_AES(textplano.Text, ByteConverter.StringToByteArray(inputPrivada1.Text), ByteConverter.Base64ToByteArray(aesIV));
+                }
 
                 textoEncriptado.Text = ByteConverter.ByteArrayToBase64(cyfrado);
-
-          
-
 
 
                 exportarEn.Enabled = true;

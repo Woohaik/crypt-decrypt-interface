@@ -44,8 +44,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.inputPrivada1 = new System.Windows.Forms.TextBox();
-            this.inputPublica1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -99,7 +97,7 @@
             // crearClavesBtn
             // 
             this.crearClavesBtn.Enabled = false;
-            this.crearClavesBtn.Location = new System.Drawing.Point(467, 72);
+            this.crearClavesBtn.Location = new System.Drawing.Point(527, 49);
             this.crearClavesBtn.Name = "crearClavesBtn";
             this.crearClavesBtn.Size = new System.Drawing.Size(102, 47);
             this.crearClavesBtn.TabIndex = 4;
@@ -194,32 +192,15 @@
             // inputPrivada1
             // 
             this.inputPrivada1.Enabled = false;
-            this.inputPrivada1.Location = new System.Drawing.Point(92, 99);
+            this.inputPrivada1.Location = new System.Drawing.Point(97, 49);
             this.inputPrivada1.Name = "inputPrivada1";
-            this.inputPrivada1.Size = new System.Drawing.Size(343, 20);
+            this.inputPrivada1.Size = new System.Drawing.Size(417, 20);
             this.inputPrivada1.TabIndex = 13;
-            // 
-            // inputPublica1
-            // 
-            this.inputPublica1.Enabled = false;
-            this.inputPublica1.Location = new System.Drawing.Point(92, 72);
-            this.inputPublica1.Name = "inputPublica1";
-            this.inputPublica1.Size = new System.Drawing.Size(343, 20);
-            this.inputPublica1.TabIndex = 16;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 75);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 13);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "Clave Publica";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 101);
+            this.label4.Location = new System.Drawing.Point(9, 52);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 13);
             this.label4.TabIndex = 18;
@@ -265,8 +246,6 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.inputPublica1);
             this.Controls.Add(this.inputPrivada1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -306,8 +285,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox inputPrivada1;
-        private System.Windows.Forms.TextBox inputPublica1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
