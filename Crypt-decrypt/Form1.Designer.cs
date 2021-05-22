@@ -97,11 +97,11 @@
             // crearClavesBtn
             // 
             this.crearClavesBtn.Enabled = false;
-            this.crearClavesBtn.Location = new System.Drawing.Point(527, 49);
+            this.crearClavesBtn.Location = new System.Drawing.Point(498, 84);
             this.crearClavesBtn.Name = "crearClavesBtn";
-            this.crearClavesBtn.Size = new System.Drawing.Size(102, 47);
+            this.crearClavesBtn.Size = new System.Drawing.Size(102, 23);
             this.crearClavesBtn.TabIndex = 4;
-            this.crearClavesBtn.Text = "Generar Claves";
+            this.crearClavesBtn.Text = "Generar Clave";
             this.crearClavesBtn.UseVisualStyleBackColor = true;
             this.crearClavesBtn.Click += new System.EventHandler(this.crearClavesBtn_Click);
             // 
@@ -132,7 +132,8 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "TDES",
-            "AES"});
+            "AES",
+            "RSA"});
             this.comboBox2.Location = new System.Drawing.Point(97, 12);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(177, 21);
@@ -192,15 +193,15 @@
             // inputPrivada1
             // 
             this.inputPrivada1.Enabled = false;
-            this.inputPrivada1.Location = new System.Drawing.Point(97, 49);
+            this.inputPrivada1.Location = new System.Drawing.Point(103, 86);
             this.inputPrivada1.Name = "inputPrivada1";
-            this.inputPrivada1.Size = new System.Drawing.Size(417, 20);
+            this.inputPrivada1.Size = new System.Drawing.Size(379, 20);
             this.inputPrivada1.TabIndex = 13;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 52);
+            this.label4.Location = new System.Drawing.Point(15, 89);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 13);
             this.label4.TabIndex = 18;
@@ -209,7 +210,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(-12, 149);
+            this.label7.Location = new System.Drawing.Point(-12, 145);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(1015, 13);
             this.label7.TabIndex = 21;

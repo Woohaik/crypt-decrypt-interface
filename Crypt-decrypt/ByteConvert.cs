@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Crypt_decrypt
 {
-    public class ByteConverter
+    public class ByteConvert
     {
+   
         public static byte[] StringToByteArray(String hex)
         {
             int NumberChars = hex.Length;
@@ -15,6 +17,12 @@ namespace Crypt_decrypt
             for (int i = 0; i < NumberChars; i += 2)
                 bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
             return bytes;
+        }
+
+        public static byte[] GetBytes(string plainText)
+        {
+            UnicodeEncoding ByteConverter = new UnicodeEncoding();
+            return  ByteConverter.GetBytes(plainText);
         }
 
         public static string ByteArrayToBase64(byte[] theBytes)
@@ -42,9 +50,6 @@ namespace Crypt_decrypt
             return System.Convert.ToBase64String(plainTextBytes);
         }
 
-        public static string ByteArrayToHexString(byte[] ba)
-        {
-            return BitConverter.ToString(ba).Replace("-", "");
-        }
+
     }
 }

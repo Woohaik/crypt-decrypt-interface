@@ -29,7 +29,6 @@ namespace Crypt_decrypt
         public static string leerXml(string ruta)
         {
 
-
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(ruta);
             XmlNodeList clave = xDoc.GetElementsByTagName("clave");

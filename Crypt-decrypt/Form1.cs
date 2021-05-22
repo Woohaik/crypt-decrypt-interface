@@ -26,19 +26,33 @@ namespace Crypt_decrypt
         {
             try
             {
-                byte[] cyfradoDesdeBase64 = ByteConverter.Base64ToByteArray(textoEncriptado.Text);
+                byte[] cyfradoDesdeBase64 = ByteConvert.Base64ToByteArray(textoEncriptado.Text);
                 string desifrado = null;
                 if (comboBox2.Text.Equals("TDES"))
                 {
 
-                    desifrado = TDES.decrypt_TDES(cyfradoDesdeBase64, ByteConverter.StringToByteArray(inputPrivada1.Text));
+                    desifrado = TDES.decrypt_TDES(cyfradoDesdeBase64, ByteConvert.Base64ToByteArray(inputPrivada1.Text));
+                }
+                else if (comboBox2.Text.Equals("RSA"))
+                {
+
+
+                    using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+                    {
+                        rsa.FromXmlString(inputPrivada1.Text);
+
+
+
+                        desifrado = RSA.decrypt_RSA(cyfradoDesdeBase64, rsa.ExportParameters(true));
+                    }
+
                 }
                 else
                 {
 
 
 
-                    desifrado = AES.decrypt_AES(cyfradoDesdeBase64, ByteConverter.StringToByteArray(inputPrivada1.Text), ByteConverter.Base64ToByteArray(aesIV));
+                    desifrado = AES.decrypt_AES(cyfradoDesdeBase64, ByteConvert.Base64ToByteArray(inputPrivada1.Text), ByteConvert.Base64ToByteArray(aesIV));
                 }
 
 
@@ -75,7 +89,7 @@ namespace Crypt_decrypt
                 {
                     string key = FileReadWriteHandler.leerXml(openFileXml.FileName);
                     inputPrivada1.Text = key;
-                    if (!textoEncriptado.Text.Equals("") && !inputPrivada1.Text.Equals("") )
+                    if (!textoEncriptado.Text.Equals("") && !inputPrivada1.Text.Equals(""))
                     {
                         desencriptarBtn.Enabled = true;
                     }
@@ -104,7 +118,7 @@ namespace Crypt_decrypt
                 {
                     // LLenar el texto obtenido a el text area
                     string text = System.IO.File.ReadAllText(openFileTxt.FileName);
-                    text = ByteConverter.Base64Decode(text);
+  
                     textoEncriptado.Text = text;
                     if (textoEncriptado.Text.Length > 0)
                     {
@@ -134,19 +148,17 @@ namespace Crypt_decrypt
 
 
 
-            if (!(comboBox2.Text.Equals("TDES") || comboBox2.Text.Equals("AES")))
+            if (!(comboBox2.Text.Equals("TDES") || comboBox2.Text.Equals("AES") || comboBox2.Text.Equals("RSA")))
             {
                 comboBox2.Text = "";
 
             }
             else
             {
-                if (!comboBox2.Text.Equals("TDES"))
-                {
+
+                inputPrivada1.Visible = true;
 
 
-                    inputPrivada1.Visible = true;
-                }
 
 
 
@@ -165,11 +177,15 @@ namespace Crypt_decrypt
 
             if (comboBox2.Text.Equals("TDES"))
             {
-                inputPrivada1.Text = ByteConverter.ByteArrayToHexString(TDES.generateKey());
+                inputPrivada1.Text = ByteConvert.ByteArrayToBase64(TDES.generateKey());
+            }
+            else if (comboBox2.Text.Equals("RSA"))
+            {
+                inputPrivada1.Text = RSA.generateKeys();
             }
             else
             {
-                inputPrivada1.Text = ByteConverter.ByteArrayToHexString(AES.generateKey());
+                inputPrivada1.Text = ByteConvert.ByteArrayToBase64(AES.generateKey());
             }
 
             if (!textoEncriptado.Text.Equals(""))
@@ -195,25 +211,33 @@ namespace Crypt_decrypt
         private void encriptarBtn_Click(object sender, EventArgs e)
         {
             try
-
-
             {
-
-
-
-
 
                 byte[] cyfrado = null;
                 if (comboBox2.Text.Equals("TDES"))
                 {
-                    cyfrado = TDES.encrypt_TDES(textplano.Text, ByteConverter.StringToByteArray(inputPrivada1.Text));
+                    cyfrado = TDES.encrypt_TDES(textplano.Text, ByteConvert.Base64ToByteArray(inputPrivada1.Text));
+                }
+                else if (comboBox2.Text.Equals("RSA"))
+                {
+
+
+                    using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+                    {
+                        rsa.FromXmlString(inputPrivada1.Text);
+
+                        cyfrado = RSA.encrypt_RSA(textplano.Text, rsa.ExportParameters(true));
+
+
+                    }
+
                 }
                 else
                 {
-                    cyfrado = AES.encrypt_AES(textplano.Text, ByteConverter.StringToByteArray(inputPrivada1.Text), ByteConverter.Base64ToByteArray(aesIV));
+                    cyfrado = AES.encrypt_AES(textplano.Text, ByteConvert.Base64ToByteArray(inputPrivada1.Text), ByteConvert.Base64ToByteArray(aesIV));
                 }
 
-                textoEncriptado.Text = ByteConverter.ByteArrayToBase64(cyfrado);
+                textoEncriptado.Text = ByteConvert.ByteArrayToBase64(cyfrado);
 
 
                 exportarEn.Enabled = true;
@@ -248,7 +272,7 @@ namespace Crypt_decrypt
             else
             {
 
-                if ((comboBox2.Text.Equals("TDES") || comboBox2.Text.Equals("AES")) && !inputPrivada1.Text.Equals(""))
+                if ((comboBox2.Text.Equals("TDES") || comboBox2.Text.Equals("AES")) || comboBox2.Text.Equals("RSA") && !inputPrivada1.Text.Equals(""))
                 {
                     encriptarBtn.Enabled = true;
                     desencriptarBtn.Enabled = true;
@@ -263,7 +287,7 @@ namespace Crypt_decrypt
             {
                 if (saveFileTxt.ShowDialog() == DialogResult.OK)
                 {
-                    FileReadWriteHandler.guardarTxt(ByteConverter.Base64Encode(textoEncriptado.Text), saveFileTxt.FileName);
+                    FileReadWriteHandler.guardarTxt(textoEncriptado.Text, saveFileTxt.FileName);
                 }
             }
         }
