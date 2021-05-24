@@ -22,52 +22,43 @@ namespace Crypt_decrypt
             return theKey;
         }
 
-
-     public static string decrypt_TDES(byte[] cipherText, byte[] Key)
+        public static string encrypt_TDES(string source, byte[] Key)
         {
-            string plaintext = null;
-            using (TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider())
-            {
-                ICryptoTransform decryptor = tdes.CreateDecryptor(Key, Key);
-                using (MemoryStream ms = new MemoryStream(cipherText))
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-                    {
-                        // Read crypto stream  
-                        using (StreamReader reader = new StreamReader(cs))
-                            plaintext = reader.ReadToEnd();
-                    }
-                }
-            }
+            TripleDESCryptoServiceProvider desCryptoProvider = new TripleDESCryptoServiceProvider();
+            MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider();
+
+            byte[] byteHash;
+            byte[] byteBuff;
+
+            byteHash = hashMD5Provider.ComputeHash(Key);
+            desCryptoProvider.Key = byteHash;
+            desCryptoProvider.Mode = CipherMode.ECB; //CBC, CFB
+            byteBuff = Encoding.UTF8.GetBytes(source);
+
+            string encoded =
+                Convert.ToBase64String(desCryptoProvider.CreateEncryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
+            return encoded;
+        }
+
+        public static string decrypt_TDES(string encodedText, byte[] Key)
+        {
+            TripleDESCryptoServiceProvider desCryptoProvider = new TripleDESCryptoServiceProvider();
+            MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider();
+
+            byte[] byteHash;
+            byte[] byteBuff;
+
+            byteHash = hashMD5Provider.ComputeHash(Key);
+            desCryptoProvider.Key = byteHash;
+            desCryptoProvider.Mode = CipherMode.ECB; //CBC, CFB
+            byteBuff = Convert.FromBase64String(encodedText);
+
+            string plaintext = Encoding.UTF8.GetString(desCryptoProvider.CreateDecryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
             return plaintext;
         }
 
-        public static byte[] encrypt_TDES(string plainText, byte[] Key)
-        {
-            byte[] encrypted;
-            // Create a new TripleDESCryptoServiceProvider.  
-            using (TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider())
-            {
-               
-                // Create encryptor  
-                ICryptoTransform encryptor = tdes.CreateEncryptor(Key, Key);
-                // Create MemoryStream  
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    // Create crypto stream using the CryptoStream class. This class is the key to encryption  
-                    // and encrypts and decrypts data from any given stream. In this case, we will pass a memory stream  
-                    // to encrypt  
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-                    {
-                        // Create StreamWriter and write data to a stream  
-                        using (StreamWriter sw = new StreamWriter(cs))
-                            sw.Write(plainText);
-                        encrypted = ms.ToArray();
-                    }
-                }
-            }
-            // Return encrypted data  
-            return encrypted;
-        }
+
+
+
     }
 }

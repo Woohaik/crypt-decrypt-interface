@@ -26,12 +26,14 @@ namespace Crypt_decrypt
         }
 
 
-        public static string leerXml(string ruta)
+        public static string leerXml(string alName, string ruta)
         {
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(ruta);
-            XmlNodeList clave = xDoc.GetElementsByTagName("clave");
+            string nombreClave = "clave";
+            if (alName.Equals("RSA")) nombreClave = "clavePrivada";
+            XmlNodeList clave = xDoc.GetElementsByTagName(nombreClave);
             return clave[0].InnerText;
 
         }

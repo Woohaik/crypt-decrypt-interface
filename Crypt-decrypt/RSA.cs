@@ -27,7 +27,7 @@ namespace Crypt_decrypt
                 using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
                 {
                     RSA.ImportParameters(RSAKey);
-                    encryptedData = RSA.Encrypt(Data, false);
+                    encryptedData = RSA.Encrypt(Data, true);
                 }
                 return encryptedData;
             }
@@ -47,15 +47,15 @@ namespace Crypt_decrypt
                 using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
                 {
                     RSA.ImportParameters(RSAKey);
-                    decryptedData = RSA.Decrypt(Data, false);
+                    decryptedData = RSA.Decrypt(Data, true);
                 }
                 UnicodeEncoding converter = new UnicodeEncoding();
                 return converter.GetString(decryptedData);
             }
             catch (CryptographicException e)
             {
-                Console.WriteLine(e.ToString());
-                return null;
+                throw new Exception(e.Message);
+          
             }
         }
 

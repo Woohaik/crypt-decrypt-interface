@@ -30,12 +30,10 @@ namespace Crypt_decrypt
                 string desifrado = null;
                 if (comboBox2.Text.Equals("TDES"))
                 {
-
-                    desifrado = TDES.decrypt_TDES(cyfradoDesdeBase64, ByteConvert.Base64ToByteArray(inputPrivada1.Text));
+                    desifrado = TDES.decrypt_TDES(textoEncriptado.Text, ByteConvert.Base64ToByteArray(inputPrivada1.Text));
                 }
                 else if (comboBox2.Text.Equals("RSA"))
                 {
-
 
                     using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
                     {
@@ -87,7 +85,7 @@ namespace Crypt_decrypt
             {
                 if (openFileXml.ShowDialog() == DialogResult.OK)
                 {
-                    string key = FileReadWriteHandler.leerXml(openFileXml.FileName);
+                    string key = FileReadWriteHandler.leerXml(comboBox2.Text, openFileXml.FileName);
                     inputPrivada1.Text = key;
                     if (!textoEncriptado.Text.Equals("") && !inputPrivada1.Text.Equals(""))
                     {
@@ -118,7 +116,7 @@ namespace Crypt_decrypt
                 {
                     // LLenar el texto obtenido a el text area
                     string text = System.IO.File.ReadAllText(openFileTxt.FileName);
-  
+
                     textoEncriptado.Text = text;
                     if (textoEncriptado.Text.Length > 0)
                     {
@@ -216,21 +214,17 @@ namespace Crypt_decrypt
                 byte[] cyfrado = null;
                 if (comboBox2.Text.Equals("TDES"))
                 {
-                    cyfrado = TDES.encrypt_TDES(textplano.Text, ByteConvert.Base64ToByteArray(inputPrivada1.Text));
+                    byte[] key = ByteConvert.Base64ToByteArray(inputPrivada1.Text);
+                    cyfrado = ByteConvert.Base64ToByteArray(TDES.encrypt_TDES(textplano.Text, key));
                 }
                 else if (comboBox2.Text.Equals("RSA"))
                 {
-
-
                     using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
                     {
                         rsa.FromXmlString(inputPrivada1.Text);
 
                         cyfrado = RSA.encrypt_RSA(textplano.Text, rsa.ExportParameters(true));
-
-
                     }
-
                 }
                 else
                 {
@@ -238,8 +232,6 @@ namespace Crypt_decrypt
                 }
 
                 textoEncriptado.Text = ByteConvert.ByteArrayToBase64(cyfrado);
-
-
                 exportarEn.Enabled = true;
             }
             catch (Exception ex)
