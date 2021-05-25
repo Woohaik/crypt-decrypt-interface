@@ -22,14 +22,15 @@ namespace Crypt_decrypt
         {
             try
             {
-                byte[] Data = ByteConvert.GetBytes(plainText);
-                byte[] encryptedData;
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-                    RSA.ImportParameters(RSAKey);
-                    encryptedData = RSA.Encrypt(Data, true);
-                }
-                return encryptedData;
+
+                RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(1024);
+
+                rsa.ImportParameters(RSAKey);
+                byte[] text = Encoding.ASCII.GetBytes(plainText);
+                byte[] result = rsa.Encrypt(text, false);
+                return result;
+
+
             }
             catch (CryptographicException e)
             {
@@ -39,18 +40,19 @@ namespace Crypt_decrypt
         }
 
 
+
+
+
         static public string decrypt_RSA(byte[] Data, RSAParameters RSAKey)
         {
             try
             {
-                byte[] decryptedData;
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-                    RSA.ImportParameters(RSAKey);
-                    decryptedData = RSA.Decrypt(Data, true);
-                }
-                UnicodeEncoding converter = new UnicodeEncoding();
-                return converter.GetString(decryptedData);
+                RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+
+                RSAParameters key = RSAKey;
+                byte[] text = Data;
+                byte[] resultado = RSAOperations.RSADecrypt(text, key, false);
+             return Encoding.Default.GetString(resultado);
             }
             catch (CryptographicException e)
             {

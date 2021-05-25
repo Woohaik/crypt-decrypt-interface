@@ -49,6 +49,7 @@
     <Compile Include="AES.cs" />
     <Compile Include="ByteConvert.cs" />
     <Compile Include="RSA.cs" />
+    <Compile Include="RSAOperations.cs" />
     <Compile Include="TDES.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

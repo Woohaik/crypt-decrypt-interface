@@ -49,7 +49,13 @@ namespace Crypt_decrypt
             XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
             XmlElement root = doc.DocumentElement;
             XmlElement alTag = doc.CreateElement(string.Empty, alName, string.Empty);
-            XmlElement clavePrivada = doc.CreateElement(string.Empty, "clave", string.Empty);
+            string t = "clave";
+            if (alName.Equals("RSA"))
+            {
+                t = "clavePrivada";
+            }
+            
+            XmlElement clavePrivada = doc.CreateElement(string.Empty, t, string.Empty);
 
             clavePrivada.InnerText = clavePrivadaTexto1;
             alTag.AppendChild(clavePrivada);

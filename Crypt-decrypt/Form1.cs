@@ -116,8 +116,17 @@ namespace Crypt_decrypt
                 {
                     // LLenar el texto obtenido a el text area
                     string text = System.IO.File.ReadAllText(openFileTxt.FileName);
-
                     textoEncriptado.Text = text;
+
+                    if (comboBox2.Text.Equals("RSA"))
+                    {
+                        byte[] textAsBytes = Convert.FromBase64String(textoEncriptado.Text);
+                        string decodedText = Encoding.UTF8.GetString(textAsBytes);
+                        textoEncriptado.Text = decodedText;
+                    }
+
+
+
                     if (textoEncriptado.Text.Length > 0)
                     {
                         exportarEn.Enabled = true;
@@ -279,7 +288,25 @@ namespace Crypt_decrypt
             {
                 if (saveFileTxt.ShowDialog() == DialogResult.OK)
                 {
-                    FileReadWriteHandler.guardarTxt(textoEncriptado.Text, saveFileTxt.FileName);
+
+                    if (comboBox2.Text.Equals("RSA"))
+                    {
+               
+                        byte[] decodedText = Encoding.UTF8.GetBytes(textoEncriptado.Text);
+                        // pasar esto a base 64
+                        ByteConvert.ByteArrayToBase64(decodedText);
+
+                        FileReadWriteHandler.guardarTxt(ByteConvert.ByteArrayToBase64(decodedText), saveFileTxt.FileName);
+
+                    }
+                    else
+                    {
+
+                        FileReadWriteHandler.guardarTxt(textoEncriptado.Text, saveFileTxt.FileName);
+                    }
+
+
+
                 }
             }
         }
